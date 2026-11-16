@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>patient medical record - {{ patient.name|lower }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <section class="top-bar">
+            <h1>hospital patient management system</h1>
+            <nav>
+                <a href="{% url 'patient_list' %}">patient directory</a>
+                <a href="{% url 'patient_create' %}">add new patient</a>
+            </nav>
+        </section>
+    </header>
+    <main>
+        <section class="content-section">
+            <fieldset>
+                <legend>personal information</legend>
+                <p class="info-row">
+                    <label>full name :</label>
+                    <span>{{ patient.name|lower }}</span>
+                </p>
+                <p class="info-row">
+                    <label>age :</label>
+                    <span>{{ patient.age }} years</span>
+                </p>
+                <p class="info-row">
+                    <label>gender :</label>
+                    <span>{{ patient.gender|lower }}</span>
+                </p>
+                <p class="info-row">
+                    <label>contact phone :</label>
+                    <span>{{ patient.contact }}</span>
+                </p>
+                <p class="info-row">
+                    <label>residential address :</label>
+                    <span>{{ patient.address|lower }}</span>
+                </p>
+                <p class="info-row">
+                    <label>blood group :</label>
+                    <span>{{ patient.blood_group|lower }}</span>
+                </p>
+                <p class="info-row">
+                    <label>emergency contact :</label>
+                    <span>{{ patient.emergency_contact }}</span>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>other information</legend>
+                <p class="info-row">
+                    <label>known allergies :</label>
+                    <span>{{ patient.allergies|lower }}</span>
+                </p>
+                <p class="info-row">
+                    <label>insurance details :</label>
+                    <span>{{ patient.insurance_details|lower }}</span>
+                </p>
+                <p class="info-row">
+                    <label>file created date :</label>
+                    <span>{{ patient.created_at|date:"Y-m-d H:i" }}</span>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>diseases & medical history</legend>
+                {% if diseases %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>disease name</th>
+                            <th>diagnosis date</th>
+                            <th>status</th>
+                            <th>notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for disease in diseases %}
+                        <tr>
+                            <td>{{ disease.disease_name|lower }}</td>
+                            <td>{{ disease.diagnosis_date }}</td>
+                            <td>{{ disease.status|lower }}</td>
+                            <td>{{ disease.notes|lower }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="empty-notice">no recorded diseases or medical history.</p>
+                {% endif %}
+            </fieldset>
+
+            <fieldset>
+                <legend>last visit & consultation history</legend>
+                {% if visits %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>visit date</th>
+                            <th>doctor name</th>
+                            <th>specialty</th>
+                            <th>reason</th>
+                            <th>diagnosis</th>
+                            <th>treatment notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for visit in visits %}
+                        <tr>
+                            <td>{{ visit.visit_date }}</td>
+                            <td>{{ visit.doctor_name|lower }}</td>
+                            <td>{{ visit.doctor_specialty|lower }}</td>
+                            <td>{{ visit.reason|lower }}</td>
+                            <td>{{ visit.diagnosis|lower }}</td>
+                            <td>{{ visit.treatment_notes|lower }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="empty-notice">no past consultation visits logged.</p>
+                {% endif %}
+            </fieldset>
+
+            <fieldset>
+                <legend>doctors ( previous / programmed )</legend>
+
+                <section class="sub-section">
+                    <h3>previous doctors</h3>
+                    {% if previous_doctors %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>doctor name</th>
+                                <th>specialty</th>
+                                <th>date</th>
+                                <th>status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doc in previous_doctors %}
+                            <tr>
+                                <td>{{ doc.doctor_name|lower }}</td>
+                                <td>{{ doc.specialty|lower }}</td>
+                                <td>{{ doc.scheduled_date|date:"Y-m-d" }}</td>
+                                <td>{{ doc.status|lower }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="empty-notice">no previous doctors recorded.</p>
+                    {% endif %}
+                </section>
+
+                <section class="sub-section">
+                    <h3>programmed appointments</h3>
+                    {% if programmed_doctors %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>doctor name</th>
+                                <th>specialty</th>
+                                <th>scheduled date</th>
+                                <th>status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doc in programmed_doctors %}
+                            <tr>
+                                <td>{{ doc.doctor_name|lower }}</td>
+                                <td>{{ doc.specialty|lower }}</td>
+                                <td>{{ doc.scheduled_date|date:"Y-m-d H:i" }}</td>
+                                <td>{{ doc.status|lower }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="empty-notice">no programmed doctor appointments.</p>
+                    {% endif %}
+                </section>
+            </fieldset>
+
+            <fieldset>
+                <legend>billing & payment information</legend>
+                <section class="bill-summary">
+                    <p class="info-row">
+                        <label>total billed amount :</label>
+                        <span>{{ total_billed }} fcfa</span>
+                    </p>
+                    <p class="info-row">
+                        <label>total paid amount :</label>
+                        <span>{{ total_paid }} fcfa</span>
+                    </p>
+                    <p class="info-row">
+                        <label>pending balance :</label>
+                        <span class="highlight-balance">{{ total_pending }} fcfa</span>
+                    </p>
+                </section>
+                {% if bills %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>invoice number</th>
+                            <th>total amount</th>
+                            <th>paid amount</th>
+                            <th>pending balance</th>
+                            <th>payment status</th>
+                            <th>invoice date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bill in bills %}
+                        <tr>
+                            <td>{{ bill.invoice_number|lower }}</td>
+                            <td>{{ bill.total_amount }} fcfa</td>
+                            <td>{{ bill.paid_amount }} fcfa</td>
+                            <td>{{ bill.pending_balance }} fcfa</td>
+                            <td>{{ bill.payment_status|lower }}</td>
+                            <td>{{ bill.created_at|date:"Y-m-d" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="empty-notice">no invoices or bills recorded.</p>
+                {% endif %}
+            </fieldset>
+
+            <p class="nav-link">
+                <a href="{% url 'patient_list' %}">back to patient directory</a>
+            </p>
+        </section>
+    </main>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

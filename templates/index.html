@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hospital patient management system</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <section class="top-bar">
+            <h1>hospital patient management system</h1>
+            <nav>
+                <a href="{% url 'patient_list' %}">patient directory</a>
+                <a href="{% url 'patient_create' %}">add new patient</a>
+            </nav>
+        </section>
+    </header>
+    <main>
+        <section class="content-section">
+            <fieldset>
+                <legend>patient record directory</legend>
+                <p class="section-intro">overview of registered patients and medical files</p>
+                {% if patients %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>patient name</th>
+                            <th>age</th>
+                            <th>gender</th>
+                            <th>contact</th>
+                            <th>blood group</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for patient in patients %}
+                        <tr>
+                            <td>#{{ patient.id }}</td>
+                            <td>{{ patient.name|lower }}</td>
+                            <td>{{ patient.age }}</td>
+                            <td>{{ patient.gender|lower }}</td>
+                            <td>{{ patient.contact }}</td>
+                            <td>{{ patient.blood_group|lower }}</td>
+                            <td>
+                                <a href="{% url 'patient_detail' pk=patient.pk %}" class="btn-link">view full file</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="empty-notice">no patient records found in database.</p>
+                {% endif %}
+            </fieldset>
+        </section>
+    </main>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

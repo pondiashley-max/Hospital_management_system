@@ -1,0 +1,168 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-transform: lowercase;
+}
+
+body {
+    background-color: whitesmoke;
+    color: darkslategray;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+header {
+    background-color: dodgerblue;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+section.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+    color: inherit;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+section.content-section {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+fieldset {
+    border: 2px solid lightgray;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+legend {
+    font-weight: bold;
+    color: dodgerblue;
+    padding: 0 10px;
+}
+
+p.field {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+p.info-row {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed lightgray;
+    padding-bottom: 5px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+button {
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: royalblue;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid lightgray;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: whitesmoke;
+    color: dodgerblue;
+}
+
+a.btn-link {
+    color: dodgerblue;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a.btn-link:hover {
+    text-decoration: underline;
+}
+
+span.highlight-balance {
+    color: crimson;
+    font-weight: bold;
+}
+
+p.nav-link {
+    margin-top: 15px;
+    text-align: center;
+}
+
+p.nav-link a {
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+section.sub-section {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid lightgray;
+}
